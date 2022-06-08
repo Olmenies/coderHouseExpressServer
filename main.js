@@ -1,28 +1,36 @@
 const express = require('express');
 const fs =  require('fs');
 
-
 class Contenedor{
   constructor(pArchivo){
     this.archivo = pArchivo;
   }
 
   async getAll(){
-    const content = await fs.promises.readFile(this.archivo, 'utf-8');
-    const contentObject = JSON.parse(content);
+    try{
+      const content = await fs.promises.readFile(this.archivo, 'utf-8');
+      const contentObject = JSON.parse(content);
 
-    return contentObject;
+      return contentObject;
+    } catch(err){
+      console.log(err);
+    }
   }
 
   async getRandom(){
-    const content = await fs.promises.readFile(this.archivo, 'utf-8');
-    const contentObject = JSON.parse(content);
+    try{
+      const content = await fs.promises.readFile(this.archivo, 'utf-8');
+      const contentObject = JSON.parse(content);
 
-    //console.log(Math.floor(Math.random() * 3));
-    let randomNumber = Math.floor(Math.random() * 3);
-    console.log(randomNumber);
-    let element = contentObject.find(({id}) => id == randomNumber );
-    return element;
+
+      let randomNumber = Math.floor(Math.random() * 3);
+
+      let element = contentObject.find(({id}) => id == randomNumber );
+      return element;
+
+    } catch(err){
+      console.log(err);
+    }
   }
 }
 
